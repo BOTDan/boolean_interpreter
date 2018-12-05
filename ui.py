@@ -526,8 +526,7 @@ def editorOpenCircuit(win):
     # Generate the links
     for link in data["links"]:
         if link["from"] < len(win.editor_elements) and link["to"] < len(win.editor_elements):
-            #win.editor_linkpoints = [[x["x"], x["y"]] for x in link["path"]]
-            win.editor_linkpoints = []
+            win.editor_linkpoints = [[x["x"], x["y"]] for x in link["path"]]
             editorCreateLink(win, win.editor_elements[link["from"]], win.editor_elements[link["to"]])
     # Created
 
