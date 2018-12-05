@@ -1,0 +1,1 @@
+{"operators": [{"type": "var", "x": 390, "y": 140, "value": "A"}, {"type": "var", "x": 390, "y": 280, "value": "B"}, {"type": "and", "x": 570, "y": 200}], "links": [{"from": 1, "to": 2, "path": [{"x": 470, "y": 240}]}, {"from": 0, "to": 2, "path": [{"x": 470, "y": 200}]}]}

@@ -15,3 +15,13 @@
 - [x] Associative Law
 - [x] Distributive Law
 - [x] DeMorgans Law
+
+# UI
+- [x] Buttons
+- [x] Text
+- [x] Tool Menu
+- [x] Operator Creation
+- [x] Operator Linking
+- [x] Operator Deleting
+- [x] Expression Generator
+- [x] Error Explainer

@@ -6,6 +6,7 @@ from op_con import *
 from op_bra import *
 
 import simplify
+import ui
 
 import itertools
 
@@ -177,6 +178,9 @@ def main():
             expression = removeBrackets(generateExpression(input("[BOOLEAN] > ")))
             print("SIMPLIFIED = {}".format(simplify.prettyPrint(simplify.simplify(expression))))
 
+        elif command.lower() in ["ui", "builder", "creator"]:
+            ui.createEditor()
+
         elif command.lower() in ["stop", "quit", "close", "end", "leave"]:
             print("\nQuitting...")
             break
@@ -184,6 +188,9 @@ def main():
 # Run the command-line-like tool
 main()
 
+#ui.createEditor()
+
+'''
 test = removeBrackets(generateExpression("0+A+(1BC0)"))
 print(test)
 test = simplify.removeNots(test)
@@ -197,6 +204,7 @@ test = simplify.removeDuplicates(simplify.removeNots(test))
 print(test)
 print("--")
 test = removeBrackets(generateExpression("(A'+B'+C')'+(A'B'+A'C'+B'C')'"))
-print("initial {}".format(prettyPrint(test)))
+print("initial {}".format(test))
 test = simplify.simplify(test)
-print(prettyPrint(test))
+print(test)
+'''
