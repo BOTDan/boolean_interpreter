@@ -5,6 +5,8 @@ from op_var import *
 from op_con import *
 from op_bra import *
 
+import simplify
+
 import itertools
 
 # Generates an expression given a boolean algebra string
@@ -23,7 +25,7 @@ def generateExpression(expression, last=None):
             length = calcBracketLength(expression[1:])
             return generateExpression(expression[length+1:], op_bra(generateExpression(expression[1:length])))
         else:
-            ValueError("Expression is Invalid!")
+            raise ValueError("Expression is Invalid!")
     else:
         # We're mid-expression
         if char.isalpha() or char.isdigit():
@@ -58,14 +60,14 @@ def generateExpression(expression, last=None):
                 last.setOperand(-1, op_not(last.getOperand(-1)))
                 return generateExpression(expression[1:], last)
         else:
-            ValueError("Expression is Invalid!")
+            raise ValueError("Expression is Invalid!")
 
 # Calculates how long a bracket spans for
 def calcBracketLength(expression):
     brackets, i = 1, 0
     while brackets > 0:
         if i >= len(expression):
-            ValueError("Expression has invalid brackets")
+            raise ValueError("Expression has invalid brackets")
         elif expression[i] == "(":
             brackets += 1
         elif expression[i] == ")":
@@ -150,7 +152,7 @@ def calcValue(expression):
 # Main program. Creates a command-line-type program
 def main():
     print("Boolean Algebra Utility")
-    print("Commands: 'table', 'eval', 'same', 'quit'")
+    print("Commands: 'table', 'eval', 'same', 'simplify', 'quit'")
     while True:
         command = input("\n[COMMAND] > ")
 
@@ -170,9 +172,31 @@ def main():
             expression2 = generateExpression(input("[BOOLEAN #2] > "))
             print(isEquivalent(expression1, expression2) and "The 2 expressions are equivalent" or "The 2 expressions are not equivalent")
 
+        elif command.lower() in ["simplify", "simple"]:
+            print("\nEnter the expression to simplify.")
+            expression = removeBrackets(generateExpression(input("[BOOLEAN] > ")))
+            print("SIMPLIFIED = {}".format(simplify.prettyPrint(simplify.simplify(expression))))
+
         elif command.lower() in ["stop", "quit", "close", "end", "leave"]:
             print("\nQuitting...")
             break
 
 # Run the command-line-like tool
 main()
+
+test = removeBrackets(generateExpression("0+A+(1BC0)"))
+print(test)
+test = simplify.removeNots(test)
+print(test)
+test = simplify.removeConstants(simplify.removeConstants(test))
+print(test)
+print("--")
+test = removeBrackets(generateExpression("AB+AC+(BA)''"))
+print(test)
+test = simplify.removeDuplicates(simplify.removeNots(test))
+print(test)
+print("--")
+test = removeBrackets(generateExpression("(A'+B'+C')'+(A'B'+A'C'+B'C')'"))
+print("initial {}".format(prettyPrint(test)))
+test = simplify.simplify(test)
+print(prettyPrint(test))

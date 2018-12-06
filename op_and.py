@@ -29,7 +29,6 @@ class op_and(op):
             try:
                 del copy[copy.index(var)]
             except ValueError:
-                print("Failed looking for {} in {}".format(var, copy))
                 return False
         return len(copy) == 0
 
