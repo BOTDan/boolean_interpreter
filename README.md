@@ -4,6 +4,7 @@ This code is capable of taking a string of boolean algebra and doing various thi
 	- Producing an output given a set of input variables
 	- Producing a truth table
 	- Comparing if 2 expressions are the same.
+It also has a UI that allows you to build circuits and generate a boolean algebra representation.
 ## How do I use it?
 1. Download this repository and unpack it somewhere.
 2. Open a command prompt where you unpacked the files.
