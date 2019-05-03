@@ -10,4 +10,4 @@ This code is capable of taking a string of boolean algebra and doing various thi
 3. Use the command `python main.py`. You need python added to your system PATH for this to work.
 	- You could also open main.py in *IDLE* or *Pyzo* and run it from there.
 
-Available commands are `eval`, `compare` and `table`.
+Available commands are `eval`, `compare`, `table` and `ui`.
