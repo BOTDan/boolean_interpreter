@@ -153,7 +153,9 @@ def calcValue(expression):
 # Main program. Creates a command-line-type program
 def main():
     print("Boolean Algebra Utility")
-    print("Commands: 'table', 'eval', 'same', 'simplify', 'quit'")
+    print("Commands: 'table', 'eval', 'same', 'simplify', 'ui' and 'quit'")
+    print("TO USE THE CIRCUIT UI, TYPE 'ui'")
+    print("TO END THE PROGRAM, TYPE 'quit'")
     while True:
         command = input("\n[COMMAND] > ")
 

@@ -66,7 +66,7 @@ def createEditor():
 
     createPanel(win, 0, 0, 250, win.height)
     createText(win, 125, 25, "Circuit Builder", 22)
-    modetext = createText(win, 125, 60, "By Dan Wells", 10)
+    modetext = createText(win, 125, 60, "", 10)
     createText(win, 125, 105, "Inputs", 14)
     button1 = createButton(win, 0, 120, 250, 40, "VARIABLE", lambda: setEditorMode(win, 0))
     button2 = createButton(win, 0, 160, 250, 40, "CONSTANT", lambda: setEditorMode(win, 1))
@@ -83,6 +83,8 @@ def createEditor():
     createText(win, 125, 625, "File", 14)
     createButton(win, 0, 640, 250, 40, "SAVE", lambda: editorSaveCircuit(win))
     createButton(win, 0, 680, 250, 40, "OPEN", lambda: editorOpenCircuit(win))
+    createText(win, 125, 745, "Help", 14)
+    createButton(win, 0, 760, 250, 40, "HELP", lambda: editorDisplayhelp(win))
     createButton(win, 0, win.height-40, 250, 40, "GENERATE", lambda: editorValidateExpression(win))
     helptext = createText(win, win.width/2+125, 30, "", 16)
     compiletext = createText(win, win.width/2+125, win.height-30, "", 16)
@@ -443,6 +445,21 @@ def editorValidateExpression(win):
             win.editor_compiletext[3].setText(e)
             if e.element:
                 e.element[1][3][0].setFill("red")
+
+# Creates the help popup
+def editorDisplayhelp(win):
+    popup = createPanel(win, 0, win.height/2-120, win.width, 240)
+    title = createText(win, win.width/2, win.height/2-100, "HELP", 24)
+    help1 = createText(win, win.width/2, win.height/2-70, "Create letters (A) and numbers (0/1) using the VARIABLE/CONSTANT tools.", 20)
+    help2 = createText(win, win.width/2, win.height/2-47, "Click where you'd like something to appear then press the key of the desired letter/number.", 20)
+    help3 = createText(win, win.width/2, win.height/2-24, "Create operators by choosing an operator and clicking on the grid.", 20)
+    help4 = createText(win, win.width/2, win.height/2+10, "Link them together using the LINK tool.", 20)
+    help5 = createText(win, win.width/2, win.height/2+33, "Click firstly on the node you want to get the output of, then what it should input to (normally left-to-right).", 20)
+    help6 = createText(win, win.width/2, win.height/2+70, "To then get the expression at a node, click on it using the OUTPUT tool then press GENERATE.", 20)
+
+    close = createButton(win, win.width-50, win.height/2+-120, 50, 30, "X", None, "red")
+
+    close[4] = lambda: undrawElements(win, popup, title, help1, help2, help3, help4, help5, help6, close)
 
 # Copies a string to the clipboard
 def copyToClipboard(string):
