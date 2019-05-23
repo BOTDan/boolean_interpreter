@@ -361,7 +361,7 @@ def mergeOrOther(expression1, expression2):
 
 # Simplifys an expression recursively
 def simplify(expression, stage="START"):
-    print("Stage [{:<13}]: {}".format(stage, prettyPrint(expression)))
+    print("Stage [{:<14}]: {}".format(stage, prettyPrint(expression)))
     initial = copy.deepcopy(expression)
         # Remove NOTs
     new = removeNots(expression)
@@ -377,10 +377,10 @@ def simplify(expression, stage="START"):
     if new != initial: return simplify(new, "RULE 7 to 8")
         # Remove Subsuplicates
     new = removeSubduplicates(new)
-    if new != initial: return simplify(new, "RULE 5 to 6")
+    if new != initial: return simplify(new, "RULE 5, 6 + 10")
         # Remove subopposites
     new = removeSubopposites(new)
-    if new != initial: return simplify(new, "RULE 7 to 8")
+    if new != initial: return simplify(new, "RULE 7, 8 + 11")
         # Remove unnecessary ORs
     new = expandOrs(new)
     if new != initial: return simplify(new, "ASSOCIATIVE")
@@ -392,7 +392,7 @@ def simplify(expression, stage="START"):
     if new != initial: return simplify(new, "(internal)")
         # Removes magic or something
     new = removeMagic(new)
-    if new != initial: return simplify(new, "RULE 10 to 11")
+    if new != initial: return simplify(new, "RULE 11")
         # Do DeMorgans Law
     new = expandDeMorgans(new)
     if new != initial: return simplify(new, "DEMORGANS")
