@@ -335,7 +335,6 @@ def mergeAnds(expression1, expression2):
 
 # Marges an AND and an OR
 def mergeAndOr(expression1, expression2):
-    print("mergine AND OR")
     created = []
     for i, operand in enumerate(expression2.getOperands()):
         created.append(op_and(operand, *expression1.getOperands()))
@@ -361,42 +360,42 @@ def mergeOrOther(expression1, expression2):
     return op_or(*created)
 
 # Simplifys an expression recursively
-def simplify(expression, stage="start"):
+def simplify(expression, stage="START"):
     print("Stage [{:<13}]: {}".format(stage, prettyPrint(expression)))
     initial = copy.deepcopy(expression)
         # Remove NOTs
     new = removeNots(expression)
-    if new != initial: return simplify(new, "nots")
+    if new != initial: return simplify(new, "RULE 9")
         # Remove Constants
     new = removeConstants(new)
-    if new != initial: return simplify(new, "constants")
+    if new != initial: return simplify(new, "RULE 1 to 4")
         # Remove Duplicates
     new = removeDuplicates(new)
-    if new != initial: return simplify(new, "duplicates")
+    if new != initial: return simplify(new, "RULE 5 to 6")
         # Remove Opposites
     new = removeOpposites(new)
-    if new != initial: return simplify(new, "opposites")
+    if new != initial: return simplify(new, "RULE 7 to 8")
         # Remove Subsuplicates
     new = removeSubduplicates(new)
-    if new != initial: return simplify(new, "subduplicates")
+    if new != initial: return simplify(new, "RULE 5 to 6")
         # Remove subopposites
     new = removeSubopposites(new)
-    if new != initial: return simplify(new, "subopposites")
+    if new != initial: return simplify(new, "RULE 7 to 8")
         # Remove unnecessary ORs
     new = expandOrs(new)
-    if new != initial: return simplify(new, "expandors")
+    if new != initial: return simplify(new, "ASSOCIATIVE")
         # Expand out touching ANDs
     new = expandAnds(new)
-    if new != initial: return simplify(new, "expandands")
+    if new != initial: return simplify(new, "DISTRIBUTIVE")
         # Remove redundancy caused by removeAnds
     new = removeRedundancy(new)
-    if new != initial: return simplify(new, "redundancy")
+    if new != initial: return simplify(new, "(internal)")
         # Removes magic or something
     new = removeMagic(new)
-    if new != initial: return simplify(new, "magic")
+    if new != initial: return simplify(new, "RULE 10 to 11")
         # Do DeMorgans Law
     new = expandDeMorgans(new)
-    if new != initial: return simplify(new, "demorgans")
+    if new != initial: return simplify(new, "DEMORGANS")
         # Finished, return simplified thing
     return new
 

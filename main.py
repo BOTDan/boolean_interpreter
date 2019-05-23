@@ -10,6 +10,16 @@ import ui
 
 import itertools
 
+# Generates an expression (or 0 if expression is invalid)
+def generateExpressionErrorless(expression):
+    try:
+        return generateExpression(expression)
+    except ValueError:
+        print("\nERROR while parsing expression. Make sure the expression only contains the following characters:")
+        print("| A to Z | 0 | 1 | + | ' | ( | ) |")
+        print("If expression was copied from somewhere, make sure the NOTs are ' and not ’\n")
+        return op_con(0)
+
 # Generates an expression given a boolean algebra string
 def generateExpression(expression, last=None):
     # Don't do anything if we've been given a blank expression
@@ -161,31 +171,39 @@ def main():
 
         if command.lower() in ["table", "truth", "truthtable"]:
             print("\nEnter the boolean expression to generate a truth table for it.")
-            expression = generateExpression(input("[BOOLEAN] > "))
+            expression = generateExpressionErrorless(input("[BOOLEAN] > "))
             calcTruthTable(expression)
 
         elif command.lower() in ["eval", "evaluate", "calc", "calculate", "calcvalue"]:
             print("\nEnter the boolean expression to get the output of.")
-            expression = generateExpression(input("[BOOLEAN] > "))
+            expression = generateExpressionErrorless(input("[BOOLEAN] > "))
             print("OUTPUT = {}".format(calcValue(expression)))
 
         elif command.lower() in ["equiv", "equivalent", "same", "compare"]:
             print("\nEnter the 2 boolean expressions to comapre.")
-            expression1 = generateExpression(input("[BOOLEAN #1] > "))
-            expression2 = generateExpression(input("[BOOLEAN #2] > "))
+            expression1 = generateExpressionErrorless(input("[BOOLEAN #1] > "))
+            expression2 = generateExpressionErrorless(input("[BOOLEAN #2] > "))
             print(isEquivalent(expression1, expression2) and "The 2 expressions are equivalent" or "The 2 expressions are not equivalent")
 
         elif command.lower() in ["simplify", "simple"]:
             print("\nEnter the expression to simplify.")
-            expression = removeBrackets(generateExpression(input("[BOOLEAN] > ")))
+            expression = removeBrackets(generateExpressionErrorless(input("[BOOLEAN] > ")))
             print("SIMPLIFIED = {}".format(simplify.prettyPrint(simplify.simplify(expression))))
+            print("NOTE: Letters may not be in alphabetical order, but should be correct due to the Commutative Law.")
+
 
         elif command.lower() in ["ui", "builder", "creator"]:
+            print("UI Launching...")
+            print("Check your taskbar for a window called 'Circuit Builder'")
             ui.createEditor()
 
         elif command.lower() in ["stop", "quit", "close", "end", "leave"]:
             print("\nQuitting...")
             break
+
+        else:
+            print("Unknown Command")
+            print("Commands: 'table', 'eval', 'same', 'simplify', 'ui' and 'quit'")
 
 # Run the command-line-like tool
 main()
